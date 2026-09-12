@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 
@@ -12,15 +13,13 @@ const navLinks = [
   { href: "/vinicius", label: "Vinicius" },
 ];
 
-// The cinematic hero uses end: "+=7000" scroll travel.
-// We reveal the header only after the user has scrolled past the hero.
-const HERO_SCROLL_END = typeof window !== "undefined" ? window.innerHeight * 6.2 : 6200;
-
+// Hero scroll travel = 2800px. Reveal header after the animation ends.
 export function Header() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const threshold = window.innerHeight * 6.2;
+    // Use a fixed threshold slightly above the hero scroll travel (2800px)
+    const threshold = 2900;
     const onScroll = () => setVisible(window.scrollY > threshold);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -37,15 +36,24 @@ export function Header() {
           : "-translate-y-full opacity-0 pointer-events-none",
       ].join(" ")}
     >
-      <div className="wrap flex items-center justify-between py-5">
-        <Link
-          href="/"
-          className="flex items-center gap-2.5 font-display font-medium text-lg text-navy transition-colors"
-        >
-          <span className="w-[34px] h-[34px] rounded-sm bg-navy flex items-center justify-center font-mono text-[13px] text-white">
-            VR
+      <div className="wrap flex items-center justify-between py-3">
+        <Link href="/" className="flex items-center gap-3 shrink-0">
+          <Image
+            src="/logo-vr.png"
+            alt="VR Consultoria — Vinicius Rodrigues"
+            width={52}
+            height={52}
+            className="object-contain"
+            priority
+          />
+          <span className="hidden sm:flex flex-col leading-none">
+            <span className="font-display font-semibold text-sm tracking-wide text-navy uppercase">
+              Vinicius Rodrigues
+            </span>
+            <span className="font-mono text-[10px] tracking-[0.2em] text-navy/50 uppercase">
+              Consultoria
+            </span>
           </span>
-          {"VR Consultoria"}
         </Link>
 
         <nav className="hidden md:flex gap-9 text-sm font-medium">

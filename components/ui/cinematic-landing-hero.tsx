@@ -308,7 +308,7 @@ export function CinematicHero({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=7000",
+          end: "+=2800",
           pin: true,
           scrub: 1,
           anticipatePin: 1,
@@ -323,17 +323,17 @@ export function CinematicHero({
             filter: "blur(20px)",
             opacity: 0.2,
             ease: "power2.inOut",
-            duration: 2,
+            duration: 1.5,
           },
           0
         )
-        .to(".main-card", { y: 0, ease: "power3.inOut", duration: 2 }, 0)
+        .to(".main-card", { y: 0, ease: "power3.inOut", duration: 1.5 }, 0)
         .to(".main-card", {
           width: "100%",
           height: "100%",
           borderRadius: "0px",
           ease: "power3.inOut",
-          duration: 1.5,
+          duration: 1,
         })
         .fromTo(
           ".mockup-scroll-wrapper",
@@ -346,9 +346,9 @@ export function CinematicHero({
             autoAlpha: 1,
             scale: 1,
             ease: "expo.out",
-            duration: 2.5,
+            duration: 1.8,
           },
-          "-=0.8"
+          "-=0.5"
         )
         .fromTo(
           ".phone-widget",
@@ -357,26 +357,26 @@ export function CinematicHero({
             y: 0,
             autoAlpha: 1,
             scale: 1,
-            stagger: 0.15,
+            stagger: 0.12,
             ease: "back.out(1.2)",
-            duration: 1.5,
+            duration: 1,
           },
-          "-=1.5"
+          "-=1.2"
         )
         .to(
           ".progress-ring",
-          { strokeDashoffset: 60, duration: 2, ease: "power3.inOut" },
-          "-=1.2"
+          { strokeDashoffset: 60, duration: 1.5, ease: "power3.inOut" },
+          "-=1.0"
         )
         .to(
           ".counter-val",
           {
             innerHTML: metricValue,
             snap: { innerHTML: 1 },
-            duration: 2,
+            duration: 1.5,
             ease: "expo.out",
           },
-          "-=2.0"
+          "-=1.5"
         )
         .fromTo(
           ".floating-badge",
@@ -404,10 +404,10 @@ export function CinematicHero({
           { x: 0, autoAlpha: 1, scale: 1, ease: "expo.out", duration: 1.5 },
           "<"
         )
-        .to({}, { duration: 2.5 })
+        .to({}, { duration: 0.8 })
         .set(".hero-text-wrapper", { autoAlpha: 0 })
         .set(".cta-wrapper", { autoAlpha: 1 })
-        .to({}, { duration: 1.5 })
+        .to({}, { duration: 0.5 })
         .to(
           [
             ".mockup-scroll-wrapper",
@@ -482,6 +482,24 @@ export function CinematicHero({
         >
           {tagline2}
         </h1>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="scroll-hint absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 pointer-events-none select-none">
+        <span
+          className="text-[11px] tracking-[0.18em] uppercase text-navy/45 font-mono"
+          style={{ fontFamily: "var(--font-mono, monospace)" }}
+        >
+          role para descobrir
+        </span>
+        <svg
+          width="28" height="44" viewBox="0 0 28 44"
+          fill="none" className="opacity-40"
+          aria-hidden="true"
+        >
+          <rect x="1" y="1" width="26" height="42" rx="13" stroke="currentColor" strokeWidth="1.5"/>
+          <rect x="12.5" y="8" width="3" height="8" rx="1.5" fill="currentColor" className="animate-bounce"/>
+        </svg>
       </div>
 
       {/* BACKGROUND LAYER 2: CTA final */}
