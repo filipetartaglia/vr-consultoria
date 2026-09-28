@@ -13,13 +13,12 @@ const navLinks = [
   { href: "/vinicius", label: "Vinicius" },
 ];
 
-// Hero scroll travel = 2800px. Reveal header after the animation ends.
+// Hero scroll travel = 1400px. Reveal header after the animation ends.
 export function Header() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Use a fixed threshold slightly above the hero scroll travel (2800px)
-    const threshold = 2900;
+    const threshold = 1500;
     const onScroll = () => setVisible(window.scrollY > threshold);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();

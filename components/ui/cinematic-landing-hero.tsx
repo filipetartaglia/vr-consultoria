@@ -308,9 +308,9 @@ export function CinematicHero({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=2800",
+          end: "+=1400",
           pin: true,
-          scrub: 1,
+          scrub: 0.5,
           anticipatePin: 1,
         },
       });
@@ -484,23 +484,44 @@ export function CinematicHero({
         </h1>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="scroll-hint absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 pointer-events-none select-none">
+      {/* ── Scroll indicator — prominent & intuitive ── */}
+      <div
+        className="scroll-hint absolute bottom-0 left-0 right-0 z-20 pointer-events-none select-none flex flex-col items-center pb-7"
+        style={{
+          background: "linear-gradient(to bottom, transparent 0%, rgba(11,27,51,0.18) 100%)",
+        }}
+      >
         <span
-          className="text-[11px] tracking-[0.18em] uppercase text-navy/45 font-mono"
-          style={{ fontFamily: "var(--font-mono, monospace)" }}
+          className="text-[11px] tracking-[0.22em] uppercase font-mono mb-3"
+          style={{ color: "rgba(11,27,51,0.55)", fontFamily: "var(--font-mono, monospace)" }}
         >
-          role para descobrir
+          role para ver
         </span>
-        <svg
-          width="28" height="44" viewBox="0 0 28 44"
-          fill="none" className="opacity-40"
-          aria-hidden="true"
-        >
-          <rect x="1" y="1" width="26" height="42" rx="13" stroke="currentColor" strokeWidth="1.5"/>
-          <rect x="12.5" y="8" width="3" height="8" rx="1.5" fill="currentColor" className="animate-bounce"/>
-        </svg>
+        {/* Animated chevrons — three stacked, fading in sequence */}
+        <div className="flex flex-col items-center gap-0.5">
+          {[0, 1, 2].map((i) => (
+            <svg
+              key={i}
+              width="22" height="14" viewBox="0 0 22 14"
+              fill="none"
+              aria-hidden="true"
+              style={{
+                opacity: 0.25 + i * 0.28,
+                animation: `scrollChevron 1.4s ease-in-out ${i * 0.18}s infinite`,
+              }}
+            >
+              <path d="M2 2L11 11L20 2" stroke="#0B1B33" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          ))}
+        </div>
       </div>
+
+      <style>{`
+        @keyframes scrollChevron {
+          0%, 100% { transform: translateY(0); opacity: inherit; }
+          50%       { transform: translateY(5px); }
+        }
+      `}</style>
 
       {/* BACKGROUND LAYER 2: CTA final */}
       <div className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 gsap-reveal pointer-events-auto will-change-transform">
