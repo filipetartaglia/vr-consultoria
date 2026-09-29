@@ -13,13 +13,15 @@ const navLinks = [
   { href: "/vinicius", label: "Vinicius" },
 ];
 
-// Hero scroll travel = 1400px. Reveal header after the animation ends.
+// Static hero is min-h-screen. Show header after user scrolls past it.
 export function Header() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const threshold = 1500;
-    const onScroll = () => setVisible(window.scrollY > threshold);
+    const onScroll = () => {
+      // Appear after scrolling 85% of the viewport height (past the static hero)
+      setVisible(window.scrollY > window.innerHeight * 0.85);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
