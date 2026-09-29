@@ -13,6 +13,10 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+
+      {/* Respiro entre o hero cinemático e o conteúdo */}
+      <div className="h-24 md:h-32 bg-white" aria-hidden="true" />
+
       <ProblemSection />
       <Bridge />
       <Services />

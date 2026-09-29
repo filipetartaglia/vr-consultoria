@@ -448,7 +448,24 @@ export function CinematicHero({
         });
     }, containerRef);
 
-    return () => ctx.revert();
+    // Progress bar — separate context so it can update the DOM element directly
+    const progressBar = document.querySelector<HTMLElement>(".hero-progress-fill");
+    const progressST = ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top top",
+      end: "+=1400",
+      scrub: true,
+      onUpdate: (self) => {
+        if (progressBar) {
+          progressBar.style.height = `${self.progress * 100}%`;
+        }
+      },
+    });
+
+    return () => {
+      ctx.revert();
+      progressST.kill();
+    };
   }, [metricValue]);
 
   return (
@@ -756,6 +773,35 @@ export function CinematicHero({
 
           </div>
         </div>
+      </div>
+
+      {/* ── Barra de progresso lateral ── */}
+      <div
+        className="absolute right-5 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-3 pointer-events-none select-none"
+        aria-hidden="true"
+      >
+        {/* Label */}
+        <span
+          className="text-[9px] tracking-[0.25em] uppercase font-mono"
+          style={{ color: "rgba(11,27,51,0.35)", writingMode: "vertical-rl", letterSpacing: "0.22em" }}
+        >
+          scroll
+        </span>
+        {/* Track */}
+        <div
+          className="w-[2px] rounded-full overflow-hidden"
+          style={{ height: "80px", background: "rgba(11,27,51,0.12)" }}
+        >
+          <div
+            className="hero-progress-fill w-full rounded-full transition-none"
+            style={{ height: "0%", background: "#2F6E51" }}
+          />
+        </div>
+        {/* Dot pulsante no fim */}
+        <div
+          className="w-1.5 h-1.5 rounded-full"
+          style={{ background: "#2F6E51", opacity: 0.5, animation: "scrollChevron 1.4s ease-in-out infinite" }}
+        />
       </div>
     </div>
   );
