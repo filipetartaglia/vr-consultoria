@@ -8,11 +8,10 @@ export const leadFormSchema = z.object({
     .trim()
     .min(10, "Informe um WhatsApp válido com DDD")
     .max(20),
-  email: z.string().trim().email("Informe um e-mail válido").max(160),
   interest: z.string().trim().max(120).optional().default(""),
   message: z.string().trim().max(1000).optional().default(""),
   // honeypot anti-spam: deve chegar vazio; se vier preenchido, é bot
-  website: z.string().max(0).optional().default(""),
+  website: z.string().max(200).optional().default(""),
   source: z.enum(LEAD_SOURCES).optional().default("site"),
   utm_source: z.string().max(120).optional().nullable(),
   utm_medium: z.string().max(120).optional().nullable(),

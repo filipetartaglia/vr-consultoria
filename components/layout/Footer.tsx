@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SITE } from "@/lib/constants";
+import { SITE, whatsappLink } from "@/lib/constants";
 
 export function Footer() {
   return (
@@ -24,19 +24,19 @@ export function Footer() {
               Depoimentos
             </Link>
             <a
-              href={`mailto:${SITE.email}`}
+              href={whatsappLink()}
+              target="_blank"
+              rel="noopener noreferrer"
               className="hover:text-white transition-colors"
             >
-              E-mail
+              WhatsApp
             </a>
           </div>
         </div>
 
         <div className="border-t border-white/10 mt-10 pt-6 text-xs flex flex-wrap justify-between gap-3">
           <span>© {new Date().getFullYear()} {SITE.name}. Todos os direitos reservados.</span>
-          <span>
-            {SITE.email} · {SITE.whatsappDisplay}
-          </span>
+          <span>{SITE.whatsappDisplay}</span>
         </div>
       </div>
     </footer>

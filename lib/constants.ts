@@ -1,9 +1,8 @@
 export const SITE = {
   name: "VR Consultoria",
   founder: "Vinicius Rodrigues",
-  whatsappNumber: "5521971115365",
-  whatsappDisplay: "+55 21 97111-5365",
-  email: "viniciusrodrigues.wealthplanner@gmail.com",
+  whatsappNumber: "5521974079029",
+  whatsappDisplay: "(21) 97407-9029",
   // TODO: preencher quando o domínio for registrado
   url: "https://vrconsultoria.com.br",
   description:

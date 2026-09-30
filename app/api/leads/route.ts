@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { leadFormSchema } from "@/types/lead";
-import { createServiceClient } from "@/lib/supabase/service";
+import { SITE } from "@/lib/constants";
 
 export async function POST(req: NextRequest) {
   let body: unknown;
@@ -8,10 +8,7 @@ export async function POST(req: NextRequest) {
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json(
-      { error: "Corpo da requisição inválido." },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Requisição inválida." }, { status: 400 });
   }
 
   const parsed = leadFormSchema.safeParse(body);
@@ -25,42 +22,58 @@ export async function POST(req: NextRequest) {
 
   const { website, ...lead } = parsed.data;
 
-  // honeypot: campo invisível que só um bot preencheria
+  // Honeypot — silently reject bots
   if (website && website.length > 0) {
-    // finge sucesso para não dar sinal ao bot, mas não grava nada
     return NextResponse.json({ ok: true });
   }
 
-  try {
-    const supabase = createServiceClient();
+  // Log the lead server-side (always works regardless of Supabase config)
+  const waText = [
+    `*Novo lead — VR Consultoria*`,
+    `Nome: ${lead.name}`,
+    `WhatsApp: ${lead.phone}`,
+    lead.interest ? `Interesse: ${lead.interest}` : "",
+    lead.message ? `Mensagem: ${lead.message}` : "",
+    lead.landing_page ? `Página: ${lead.landing_page}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
 
-    const { error } = await supabase.from("leads").insert({
-      name: lead.name,
-      phone: lead.phone,
-      email: lead.email,
-      interest: lead.interest || null,
-      message: lead.message || null,
-      source: lead.source || "site",
-      utm_source: lead.utm_source || null,
-      utm_medium: lead.utm_medium || null,
-      utm_campaign: lead.utm_campaign || null,
-      utm_content: lead.utm_content || null,
-      utm_term: lead.utm_term || null,
-      landing_page: lead.landing_page || null,
-      referrer: lead.referrer || null,
-    });
+  console.info("[VR Lead]", {
+    name: lead.name,
+    phone: lead.phone,
+    interest: lead.interest,
+    wa_link: `https://wa.me/${SITE.whatsappNumber}?text=${encodeURIComponent(waText)}`,
+  });
 
-    if (error) throw error;
+  // Try to save to Supabase only if configured
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    return NextResponse.json({ ok: true });
-  } catch (error) {
-    console.error("Erro ao gravar lead:", error);
-    return NextResponse.json(
-      {
-        error:
-          "Não foi possível enviar seu diagnóstico agora. Tente novamente ou fale pelo WhatsApp.",
-      },
-      { status: 503 }
-    );
+  if (supabaseUrl && serviceKey) {
+    try {
+      const { createServiceClient } = await import("@/lib/supabase/service");
+      const supabase = createServiceClient();
+
+      await supabase.from("leads").insert({
+        name: lead.name,
+        phone: lead.phone,
+        interest: lead.interest || null,
+        message: lead.message || null,
+        source: lead.source || "site",
+        utm_source: lead.utm_source || null,
+        utm_medium: lead.utm_medium || null,
+        utm_campaign: lead.utm_campaign || null,
+        utm_content: lead.utm_content || null,
+        utm_term: lead.utm_term || null,
+        landing_page: lead.landing_page || null,
+        referrer: lead.referrer || null,
+      });
+    } catch (err) {
+      // Log but don't block the response
+      console.error("[VR Lead] Supabase error:", err);
+    }
   }
+
+  return NextResponse.json({ ok: true });
 }
