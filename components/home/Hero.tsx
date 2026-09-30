@@ -54,16 +54,26 @@ export function Hero() {
 
       <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto w-full">
 
-        {/* Logo VR — maior e mais visível */}
+        {/* Logo VR — em container branco arredondado (logo tem fundo branco) */}
         <div data-hero className="mb-8">
-          <Image
-            src="/logo-vr.png"
-            alt="VR Consultoria — Vinicius Rodrigues"
-            width={120}
-            height={120}
-            className="object-contain brightness-0 invert mx-auto drop-shadow-[0_0_24px_rgba(255,255,255,0.15)]"
-            priority
-          />
+          <div className="inline-flex items-center gap-3 bg-white rounded-xl px-5 py-3 shadow-[0_0_0_1px_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.3)]">
+            <Image
+              src="/logo-vr.png"
+              alt="VR Consultoria — Vinicius Rodrigues"
+              width={48}
+              height={48}
+              className="object-contain"
+              priority
+            />
+            <div className="text-left">
+              <div className="font-display font-semibold text-[13px] tracking-wide text-navy uppercase leading-none">
+                Vinicius Rodrigues
+              </div>
+              <div className="font-mono text-[10px] tracking-[0.2em] text-navy/50 uppercase mt-0.5">
+                Consultoria
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Eyebrow */}
