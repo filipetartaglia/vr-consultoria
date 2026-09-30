@@ -38,20 +38,20 @@ export function Header() {
       ].join(" ")}
     >
       <div className="wrap flex items-center justify-between py-3">
-        <Link href="/" className="flex items-center gap-3 shrink-0">
-          <Image
-            src="/logo-vr.png"
-            alt="VR Consultoria — Vinicius Rodrigues"
-            width={52}
-            height={52}
-            className="object-contain"
-            priority
-          />
+        <Link href="/" className="flex items-center gap-2.5 shrink-0">
+          <div className="w-10 h-10 relative shrink-0">
+            <Image
+              src="/logo-vr.png"
+              alt="VR Consultoria"
+              fill
+              className="object-contain mix-blend-multiply"
+            />
+          </div>
           <span className="hidden sm:flex flex-col leading-none">
-            <span className="font-display font-semibold text-sm tracking-wide text-navy uppercase">
+            <span className="font-display font-semibold text-[13px] tracking-wide text-navy uppercase">
               Vinicius Rodrigues
             </span>
-            <span className="font-mono text-[10px] tracking-[0.2em] text-navy/50 uppercase">
+            <span className="font-mono text-[9px] tracking-[0.22em] text-navy/45 uppercase">
               Consultoria
             </span>
           </span>
