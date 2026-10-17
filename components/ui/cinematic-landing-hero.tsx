@@ -308,7 +308,7 @@ export function CinematicHero({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=2200",
+          end: "+=3000",
           pin: true,
           scrub: 0.8,
           anticipatePin: 1,
@@ -453,7 +453,7 @@ export function CinematicHero({
     const progressST = ScrollTrigger.create({
       trigger: containerRef.current,
       start: "top top",
-      end: "+=2200",
+      end: "+=3000",
       scrub: true,
       onUpdate: (self) => {
         if (progressBar) {

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function DiagnosticoPage() {
   return (
-    <section className="section">
+    <section className="section pt-28">
       <div className="wrap grid md:grid-cols-2 gap-14 items-start">
         <div>
           <span className="eyebrow">Diagnóstico Financeiro VR</span>
